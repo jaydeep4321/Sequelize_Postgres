@@ -8,7 +8,7 @@ import {
 import { Team } from '../team/team.entity';
 
 @Table
-export class Player extends Model {
+export class Player extends Model<Player> {
   @Column
   name: string;
 

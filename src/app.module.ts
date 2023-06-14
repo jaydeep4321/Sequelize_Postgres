@@ -10,6 +10,7 @@ import { PlayerModule } from './modules/player/player.module';
 import { BookModule } from './modules/book/book.module';
 import { AuthorModule } from './modules/author/author.module';
 import { BookAuthorModule } from './modules/book-author/book-author.module';
+// import { BookAuthorModule } from './book-author/book-author.module';
 
 @Module({
   imports: [
