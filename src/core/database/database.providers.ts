@@ -7,6 +7,7 @@ import { Player } from 'src/modules/player/player.entity';
 import { Book } from 'src/modules/book/book.entity';
 import { Author } from 'src/modules/author/author.entity';
 import { BookAuthor } from 'src/modules/book-author/book-author.entity';
+import { Employee } from 'src/modules/employee/employee.entity';
 
 export const databaseProviders = [
   {
@@ -27,7 +28,15 @@ export const databaseProviders = [
           config = databaseConfig.development;
       }
       const sequelize = new Sequelize(config);
-      sequelize.addModels([User, Team, Player, Book, Author, BookAuthor]);
+      sequelize.addModels([
+        User,
+        Team,
+        Player,
+        Book,
+        Author,
+        BookAuthor,
+        Employee,
+      ]);
       await sequelize.sync();
       return sequelize;
     },

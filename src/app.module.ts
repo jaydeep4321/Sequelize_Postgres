@@ -11,6 +11,7 @@ import { BookModule } from './modules/book/book.module';
 import { AuthorModule } from './modules/author/author.module';
 import { BookAuthorModule } from './modules/book-author/book-author.module';
 // import { BookAuthorModule } from './book-author/book-author.module';
+import { EmployeeModule } from './modules/employee/employee.module';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { BookAuthorModule } from './modules/book-author/book-author.module';
     BookModule,
     AuthorModule,
     BookAuthorModule,
+    EmployeeModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -18,6 +18,7 @@ export class TeamService {
       include: [
         {
           model: Player,
+          attributes: { exclude: ['teamId'] },
         },
       ],
     });
