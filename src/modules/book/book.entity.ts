@@ -8,7 +8,9 @@ import {
 import { Author } from '../author/author.entity';
 import { BookAuthor } from '../book-author/book-author.entity';
 
-@Table
+@Table({
+  timestamps: false,
+})
 export class Book extends Model<Book> {
   @Column({
     type: DataType.STRING,

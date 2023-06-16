@@ -1,0 +1,48 @@
+// Model class
+class User extends Sequelize.Model {
+  static define(sequelize) {
+    return sequelize.define('user', {
+      id: {
+        primaryKey: true,
+        type: Sequelize.INTEGER,
+        autoIncrement: true,
+      },
+      name: {
+        type: Sequelize.STRING,
+      },
+      email: {
+        type: Sequelize.STRING,
+      },
+    });
+  }
+}
+
+// Controller
+@Controller('users')
+export class UsersController {
+  constructor(private readonly userService: UserService) {}
+
+  @Get()
+  async paginateUsers(
+    @Query('page') page: number,
+    @Query('pageSize') pageSize: number,
+  ) {
+    const users = await this.userService.paginateUsers(page, pageSize);
+    return users;
+  }
+}
+
+// Service
+@Injectable()
+export class UserService {
+  constructor(private readonly userRepository: UserRepository) {}
+
+  async paginateUsers(page: number, pageSize: number) {
+    const offset = (page - 1) * pageSize;
+    const users = await this.userRepository.findAndCountAll({
+      offset,
+      limit: pageSize,
+    });
+    return users;
+  }
+}

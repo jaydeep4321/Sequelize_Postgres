@@ -16,4 +16,17 @@ export class EmployeeService {
   async findAll(): Promise<Employee[]> {
     return await this.repo.findAll<Employee>();
   }
+
+  async findOne(empId: number): Promise<Employee> {
+    return await this.repo.findOne<Employee>({ where: { empId } });
+  }
+
+  async paginateEmployee(page?: number, pageSize?: number) {
+    const offset = (page - 1) * pageSize;
+    const employee = await this.repo.findAndCountAll<Employee>({
+      offset,
+      limit: pageSize,
+    });
+    return employee;
+  }
 }

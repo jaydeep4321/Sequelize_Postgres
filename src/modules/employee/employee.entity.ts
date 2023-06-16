@@ -1,10 +1,17 @@
-import { Column, DataType, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, Model, Table, Index } from 'sequelize-typescript';
 
-@Table
+@Table({
+  indexes: [
+    {
+      fields: ['empId'],
+    },
+  ],
+})
 export class Employee extends Model<Employee> {
   @Column
   name: string;
 
+  @Index
   @Column
   empId: number;
 
