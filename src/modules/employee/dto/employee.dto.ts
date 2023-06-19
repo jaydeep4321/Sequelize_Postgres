@@ -1,4 +1,4 @@
-import { IsJSON, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsJSON, IsNotEmpty, IsNumber, IsObject } from 'class-validator';
 
 export class EmployeeDto {
   @IsNotEmpty()
@@ -10,5 +10,5 @@ export class EmployeeDto {
 
   @IsNotEmpty()
   @IsJSON()
-  readonly address: JSON;
+  address: JSON;
 }

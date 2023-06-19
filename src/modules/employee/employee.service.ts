@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { EMPLOYEE_REPOSITORY } from 'src/core/constants';
 import { Employee } from './employee.entity';
 import { EmployeeDto } from './dto/employee.dto';
+import { Json } from 'sequelize/types/utils';
 
 @Injectable()
 export class EmployeeService {
@@ -18,7 +19,7 @@ export class EmployeeService {
   }
 
   async findOne(empId: number): Promise<Employee> {
-    return await this.repo.findOne<Employee>({ where: { empId } });
+    return await this.repo.findOne<Employee>({ where: { empId: empId } });
   }
 
   async paginateEmployee(page?: number, pageSize?: number) {
@@ -29,4 +30,8 @@ export class EmployeeService {
     });
     return employee;
   }
+
+  // async queryBuilder(alias: string) {
+  //   return this.repo.;
+  // }
 }

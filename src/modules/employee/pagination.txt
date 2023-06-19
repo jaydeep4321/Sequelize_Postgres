@@ -46,3 +46,29 @@ export class UserService {
     return users;
   }
 }
+
+
+
+
+
+
+
+
+
+
+import { Controller, Get, Query } from '@nestjs/common';
+import { UserService } from './user.service';
+
+@Controller('users')
+export class UsersController {
+  constructor(private readonly userService: UserService) {}
+
+  @Get()
+  async getAllUsers(@Query('name') name: string) {
+    const users = await this.userService.getAllUsers();
+    if (name) {
+      users = users.filter((user) => user.name.toLowerCase().includes(name.toLowerCase()));
+    }
+    return users;
+  }
+}
