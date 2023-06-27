@@ -13,7 +13,6 @@ import { BookAuthorModule } from './modules/book-author/book-author.module';
 // import { BookAuthorModule } from './book-author/book-author.module';
 import { EmployeeModule } from './modules/employee/employee.module';
 import { MathModule } from './modules/math/math.module';
-import { ClientsModule, Transport } from '@nestjs/microservices';
 
 @Module({
   imports: [
@@ -28,16 +27,16 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     BookAuthorModule,
     EmployeeModule,
     MathModule,
-    ClientsModule.register([
-      {
-        name: 'GREETING_SERVICE',
-        transport: Transport.TCP,
-        options: {
-          host: '127.0.0.1',
-          port: 8080,
-        },
-      },
-    ]),
+    // ClientsModule.register([
+    //   {
+    //     name: 'GREETING_SERVICE',
+    //     transport: Transport.TCP,
+    //     options: {
+    //       host: '127.0.0.1',
+    //       port: 8080,
+    //     },
+    //   },
+    // ]),
   ],
   controllers: [AppController],
   providers: [AppService],
