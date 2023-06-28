@@ -9,6 +9,7 @@ export class EmployeeDto {
   readonly empId: number;
 
   @IsNotEmpty()
-  @IsJSON()
-  address: JSON;
+  // @IsJSON()
+  // address: JSON;
+  address: string;
 }

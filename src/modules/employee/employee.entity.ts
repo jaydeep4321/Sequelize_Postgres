@@ -1,4 +1,5 @@
 import { Column, DataType, Model, Table, Index } from 'sequelize-typescript';
+import { Col } from 'sequelize/types/utils';
 
 @Table
 export class Employee extends Model<Employee> {
@@ -9,6 +10,8 @@ export class Employee extends Model<Employee> {
   @Column
   empId: number;
 
-  @Column(DataType.JSONB)
-  address: JSON;
+  // @Column(DataType.JSONB)
+  @Column
+  // address: JSON;
+  address: string;
 }

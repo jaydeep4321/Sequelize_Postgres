@@ -1,10 +1,23 @@
-import { Body, Controller, Get, Param, Post, Query, Res } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Query,
+  Res,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
 import { EmployeeService } from './employee.service';
 import { EmployeeDto } from './dto/employee.dto';
 import { ResponseDto } from 'src/response.dto';
-import { json } from 'sequelize';
-import { Json } from 'sequelize/types/utils';
-// import { employeeProviders } from './employee.provider';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { readFileSync } from 'fs';
+import { Request } from 'express';
+const fs = require('fs');
+const csv = require('csv-parser');
 
 @Controller('employee')
 export class EmployeeController {
@@ -56,5 +69,68 @@ export class EmployeeController {
 
     employee.address = address;
     return new ResponseDto().sendSuccess('success', employee, res);
+  }
+
+  // @Post('csv')
+  // @UseInterceptors(
+  //   FileInterceptor('file_csv', {
+  //     storage: diskStorage({
+  //       // destination: './files',
+  //     }),
+  //   }),
+  // )
+  // async uploadFile() {
+  //   // const csvFile = readFileSync('files/dummy.csv');
+  //   // const csvData = csvFile.toString();
+  //   // const parsedCsv = await parse(csvData, {
+  //   //   header: true,
+  //   //   skipEmptyLines: true,
+  //   //   transformHeader: (header) => header.toLowerCase().replace('#', ''.trim()),
+  //   //   complete: (result) => result.data,
+  //   // });
+  // }
+
+  @Post('upload')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      limits: {
+        files: 1,
+        fileSize: 52428800, // 50 mb in bytes
+      },
+
+      dest: './src/modules/employee/csv',
+      fileFilter: (req: Request, file, cb) => {
+        const ext = file.mimetype;
+        if (ext !== 'text/csv') {
+          return cb(new Error('Extension not allowed, upload csv!!'), false);
+        }
+        return cb(null, true);
+      },
+    }),
+  )
+  uploadFile(@UploadedFile() file: Express.Multer.File, @Res() res) {
+    console.log(file);
+    console.log('mime type of file ===>', file.mimetype);
+    const results = [];
+
+    fs.createReadStream(file.path)
+      .pipe(csv())
+      .on('data', (data) => results.push(data))
+      .on('end', async () => {
+        // Insert the CSV data into the database
+        try {
+          console.log(results);
+
+          if (results.length > 0) {
+            for (let i = 0; i < results.length; i++) {
+              let result = results[i];
+              const employee = await this.employeeService.create(result);
+            }
+            res.status(200).json({ results });
+          } else console.log('data not found');
+        } catch (error) {
+          res.status(500).json({ error });
+        }
+      });
   }
 }
