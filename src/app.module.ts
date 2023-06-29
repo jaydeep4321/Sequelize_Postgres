@@ -12,6 +12,7 @@ import { AuthorModule } from './modules/author/author.module';
 import { BookAuthorModule } from './modules/book-author/book-author.module';
 // import { BookAuthorModule } from './book-author/book-author.module';
 import { EmployeeModule } from './modules/employee/employee.module';
+import { MathModule } from './modules/math/math.module';
 
 @Module({
   imports: [
@@ -25,6 +26,17 @@ import { EmployeeModule } from './modules/employee/employee.module';
     AuthorModule,
     BookAuthorModule,
     EmployeeModule,
+    MathModule,
+    // ClientsModule.register([
+    //   {
+    //     name: 'GREETING_SERVICE',
+    //     transport: Transport.TCP,
+    //     options: {
+    //       host: '127.0.0.1',
+    //       port: 8080,
+    //     },
+    //   },
+    // ]),
   ],
   controllers: [AppController],
   providers: [AppService],
