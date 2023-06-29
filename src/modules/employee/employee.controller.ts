@@ -163,6 +163,7 @@ export class EmployeeController {
 
     console.log('completed writing csv');
 
+    // this returns the data
     return res.json({ data });
   }
 }
