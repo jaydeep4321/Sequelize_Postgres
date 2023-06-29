@@ -16,8 +16,13 @@ import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { readFileSync } from 'fs';
 import { Request } from 'express';
+import { number } from 'joi';
 const fs = require('fs');
 const csv = require('csv-parser');
+const ObjectsToCsv = require('objects-to-csv');
+const process = require('process');
+// const v8 = require('v8');
+// v8.setFlagsFromString('--stack-size=12000');
 
 @Controller('employee')
 export class EmployeeController {
@@ -132,5 +137,32 @@ export class EmployeeController {
           res.status(500).json({ error });
         }
       });
+  }
+
+  @Post('createCsv/:value')
+  async createCsv(@Param() value: number, @Res() res) {
+    const number: any = value;
+    console.log(number.value);
+    process.max_stack_size = 100000000;
+    let data = [];
+    if (number.value > 0)
+      for (let i = 0; i < number.value; i++) {
+        data[i] = {
+          name: 'jaydeep',
+          empId: i + 1,
+          address: 'Ahmedabad, Gujarat, india',
+        };
+      }
+    else {
+      return res.send('value must be positive and greater than zero');
+    }
+
+    const csv = await new ObjectsToCsv(data);
+
+    await csv.toDisk('./src/modules/employee/csv/example.csv');
+
+    console.log('completed writing csv');
+
+    return res.json({ data });
   }
 }

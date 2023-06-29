@@ -1,6 +1,0 @@
-name,empId,address
-neel patel,1,"""{\""city\"": \""anand\"", \""state\"": \""gujarat\"", \""country\"": \""India\""}"""
-neel patel,2,"""{\""city\"": \""anand\"", \""state\"": \""gujarat\"", \""country\"": \""India\""}"""
-neel patel,3,"""{\""city\"": \""anand\"", \""state\"": \""gujarat\"", \""country\"": \""India\""}"""
-jaydeep,3,"""{ \""city\"": \""anand\"", \""state\"": \""gujarat\"", \""country\"": \""india\""}"""
-neel patel,3,"""{\""city\"": \""anand\"", \""state\"": \""gujarat\"", \""country\"": \""India\""}"""

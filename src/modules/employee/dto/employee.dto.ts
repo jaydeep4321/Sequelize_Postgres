@@ -1,14 +1,14 @@
 import { IsJSON, IsNotEmpty, IsNumber, IsObject } from 'class-validator';
 
 export class EmployeeDto {
-  @IsNotEmpty()
+  // @IsNotEmpty()
   readonly name: string;
 
-  @IsNotEmpty()
-  @IsNumber()
+  // @IsNotEmpty()
+  // @IsNumber()
   readonly empId: number;
 
-  @IsNotEmpty()
+  // @IsNotEmpty()
   // @IsJSON()
   // address: JSON;
   address: string;
