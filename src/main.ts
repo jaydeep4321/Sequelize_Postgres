@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { Transport } from '@nestjs/microservices';
+// import { Transport } from '@nestjs/microservices';
 import { ValidateInputPipe } from './core/pipes/validate.pipe';
 
 async function bootstrap() {
