@@ -1,3 +1,4 @@
+import { Blob } from 'buffer';
 import { IsJSON, IsNotEmpty, IsNumber, IsObject } from 'class-validator';
 
 export class EmployeeDto {

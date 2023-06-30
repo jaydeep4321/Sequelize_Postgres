@@ -17,6 +17,8 @@ import { diskStorage } from 'multer';
 import { readFileSync } from 'fs';
 import { Request } from 'express';
 import { number } from 'joi';
+import sequelize from 'sequelize';
+import { buffer } from 'stream/consumers';
 const fs = require('fs');
 const csv = require('csv-parser');
 const ObjectsToCsv = require('objects-to-csv');
@@ -32,7 +34,15 @@ export class EmployeeController {
   async createEmployee(@Body() body: EmployeeDto) {
     // console.log(typeof JSON.stringify(body.address));
     // body.address = JSON.stringify(body.address);
-    return this.employeeService.create(body);
+    return this.employeeService.create({
+      empId: body.empId,
+      address: body.address,
+      name: sequelize.fn(
+        'PGP_SYM_ENCRYPT',
+        body.name,
+        process.env.EN_SECRET_KEY,
+      ),
+    });
   }
   // @Get()
   // findAll() {
@@ -52,18 +62,18 @@ export class EmployeeController {
     return new ResponseDto().sendSuccess('success', employee, res);
   }
 
-  @Get('/search')
-  async getAllUsers(@Query('name') name: string, @Res() res) {
-    console.log('==> reached here!!');
-    let employees = await this.employeeService.findAll();
-    if (name) {
-      employees = employees.filter((employee) =>
-        employee.name.toLowerCase().includes(name.toLowerCase()),
-      );
-    }
+  // @Get('/search')
+  // async getAllUsers(@Query('name') name: string, @Res() res) {
+  //   console.log('==> reached here!!');
+  //   let employees = await this.employeeService.findAll();
+  //   if (name) {
+  //     employees = employees.filter((employee) =>
+  //       employee.name.toLowerCase().includes(name.toLowerCase()),
+  //     );
+  //   }
 
-    return new ResponseDto().sendSuccess('success', employees, res);
-  }
+  //   return new ResponseDto().sendSuccess('success', employees, res);
+  // }
 
   @Get('/:empId')
   async findOne(@Param('empId') empId: string, @Res() res) {
